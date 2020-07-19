@@ -19,28 +19,28 @@ app.use(express.json());
 //Serve up static assets from public
 app.use(express.static(__dirname + "/public"));
 
+// ===========================================================
+
 var newNote;
 var noteId = 0;
+
+// ===========================================================
 
 // //ROUTES WITH REQUEST & RESPONSE HANDLERS
 // The following HTML routes should be created:
 // GET /notes - Should return the notes.html file.
 
-app.get("/", function(req, res) {
+app.get("/*", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/index.html"));
-    res.send("Hello Jen!")
-   })
+})
 
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/notes.html"))
+    return res.json(get_notes())
    }) 
 
+   
 // POST `/api/notes` - Should recieve a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
-function assignNoteID(newNote) {
-    newNote.id = noteId+1;
-    noteId++;
-}
-
 app.post("/api/notes", function(req, res) {
     newNote = req.body
     // assignNoteID(newNote);
@@ -53,7 +53,21 @@ app.post("/api/notes", function(req, res) {
     });
 });
 
-// .then(assignNoteID(req.params.id))
+// ===========================================================
+
+function assignNoteID(newNote) {
+    newNote.id = noteId+1;
+    noteId++;
+}
+
+function get_notes() {
+    var notes_raw = fs.readFileSync(path.join(__dirname, "db", "db.json"))
+    return JSON.parse(notes_raw)
+}
+
+// ===========================================================
+
+
 
 // Listener
 // ===========================================================
