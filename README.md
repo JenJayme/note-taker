@@ -49,12 +49,13 @@ For users that need to keep track of a lot of information, it's easy to forget o
 
 ### Download the app from Git Hub here:
 * [Repo URL](https://github.com/jenjayme/note-taker/)
+* [Git Repo on Heroku](https://git.heroku.com/jens-note-taker.git#demo)
 
 ### To run: 
 * To be added
 
 ### You can view a demo here: 
-* [Deployed URL](https://heroku link#demo)
+* [Deployed URL](https://git.heroku.com/jens-note-taker.git#demo)
 
 <hr>
 
