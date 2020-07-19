@@ -19,26 +19,6 @@ app.get("/notes", function(req, res) {
 })
 
 
-    // return res.sendFile(path.join(__dirname, "/notes.html"));
-//   });
-
-
-// GET * - Should return the index.html file
-// app.get("*", function(req, res) {
-//     res.sendFile(path.join(__dirname, "/index.html"));
-// });
-
-// GET `/api/notes` - Should read the `db.json` file and return all saved notes as JSON.
-// app.get("/api/notes", function(req, res) {
-//     return res.json(db.json);
-//     console.log(db.json)
-//   });
-
-// POST `/api/notes` - Should recieve a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
-// function assignNoteID(newNote) {
-//     newNote.id = noteId+1;
-// }
-
 // app.post("/api/notes/new", function(req, res) {
 //     var newNote;
 //     newNote.note = req.body;
