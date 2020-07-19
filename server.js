@@ -23,6 +23,7 @@ app.use(express.static(__dirname + "/public"));
 
 var newNote;
 var noteId = 0;
+var allNotes = [];
 
 // ===========================================================
 
@@ -36,7 +37,7 @@ app.get("/*", function(req, res) {
 
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/notes.html"))
-    return res.json(get_notes())
+    return res.json(gatherNotes())
    }) 
 
    
@@ -60,10 +61,47 @@ function assignNoteID(newNote) {
     noteId++;
 }
 
-function get_notes() {
-    var notes_raw = fs.readFileSync(path.join(__dirname, "db", "db.json"))
-    return JSON.parse(notes_raw)
+
+function getNextId(allNotes) {
+    var ids = getAllIds(allNotes)
+    if (ids.length === 0) {
+        return 1
+    }
+    else {
+        var max = Math.max(...ids)
+        return max + 1
+    }
 }
+
+function getAllIds(allNotes) {
+    var AllIdsArr = [];
+    for (var i=0; i<allNotes.length; i++) {
+        AllIdsArr.push(allNotes[i].id)
+    }
+
+    return AllIdsArr
+}
+
+function gatherNotes() {
+    var rawNotes = fs.readFileSync(path.join(__dirname, "/db/db.json"))
+    return JSON.parse(rawNotes)
+}
+
+function addNote(newNote) {
+    var notes = gatherNotes()
+    var newId = getNextId(notes)
+    console.log(newId)
+    newNote['id'] = newId
+    notes.push(newNote)
+    updateNotes(notes)
+}
+
+function updateNotes(updated) {
+    fs.writeFile(path.join(__dirname, "db", "db.json"), JSON.stringify(updated), err => {
+        if (err) throw err
+    })
+}
+
 
 // ===========================================================
 
