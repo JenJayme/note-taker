@@ -2,6 +2,7 @@
 const fs = require('fs');
 const express = require("express");
 const app = express();
+const noteClass = require('noteclass.js')
 
 // More easily interact with the body of requests
 var bodyParser = require("body-parser")
@@ -22,8 +23,9 @@ app.use(express.static(__dirname + "/public"));
 // ===========================================================
 
 var newNote;
-var noteId = 0;
 var allNotes = [];
+var lastId = allNotes.length;
+console.log(lastId);
 
 // ===========================================================
 
@@ -40,12 +42,11 @@ app.get("/notes", function(req, res) {
     // return res.json(gatherNotes())
    }) 
 
-   
 // POST `/api/notes` - Should recieve a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
 app.post("/api/notes", function(req, res) {
     newNote = req.body
     // assignNoteID(newNote);
-    fs.writeFile('/db/db.json', newNote, function (err) {
+    fs.appendFile('/db/db.json', newNote, function (err) {
         if (err) throw err;
         console.log('Encountered an error trying to append file.');
         res.json(newNote);
@@ -56,9 +57,16 @@ app.post("/api/notes", function(req, res) {
 
 // ===========================================================
 
-function assignNoteID(newNote) {
-    newNote.id = noteId+1;
-    noteId++;
+
+
+
+// ===========================================================
+
+
+function addNote(newNote) {
+    var newNote = new Note (req.body.title, req.body.text);
+    allNotes.push(newNote.stringify)
+    return newNote; 
 }
 
 function gatherNotes() {
@@ -66,14 +74,17 @@ function gatherNotes() {
     return JSON.parse(rawNotes)
 }
 
-function addNote(newNote) {
-    var notes = gatherNotes()
-    var newId = getNextId(notes)
-    console.log(newId)
-    newNote['id'] = newId
-    notes.push(newNote)
-    updateNotes(notes)
-}
+//originally
+app.post("/api/notes/new", function(req, res) {
+    var newNote;
+    newNote.note = req.body;
+    newNote.id = noteID+1;
+    noteID++;
+    allNotes.push(newNote);
+    res.json(newNote);
+    console.log(newNote);
+    return newNote;
+});
 
 function updateNotes(updated) {
     fs.writeFile(path.join(__dirname, "db", "db.json"), JSON.stringify(updated), err => {
