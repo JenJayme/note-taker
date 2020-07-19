@@ -31,13 +31,13 @@ var allNotes = [];
 // The following HTML routes should be created:
 // GET /notes - Should return the notes.html file.
 
-app.get("/*", function(req, res) {
+app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/index.html"));
 })
 
 app.get("/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/notes.html"))
-    return res.json(gatherNotes())
+    // return res.json(gatherNotes())
    }) 
 
    
@@ -45,7 +45,7 @@ app.get("/notes", function(req, res) {
 app.post("/api/notes", function(req, res) {
     newNote = req.body
     // assignNoteID(newNote);
-    fs.appendFile('/db/db.json', newNote, function (err) {
+    fs.writeFile('/db/db.json', newNote, function (err) {
         if (err) throw err;
         console.log('Encountered an error trying to append file.');
         res.json(newNote);
@@ -59,27 +59,6 @@ app.post("/api/notes", function(req, res) {
 function assignNoteID(newNote) {
     newNote.id = noteId+1;
     noteId++;
-}
-
-
-function getNextId(allNotes) {
-    var ids = getAllIds(allNotes)
-    if (ids.length === 0) {
-        return 1
-    }
-    else {
-        var max = Math.max(...ids)
-        return max + 1
-    }
-}
-
-function getAllIds(allNotes) {
-    var AllIdsArr = [];
-    for (var i=0; i<allNotes.length; i++) {
-        AllIdsArr.push(allNotes[i].id)
-    }
-
-    return AllIdsArr
 }
 
 function gatherNotes() {
@@ -101,6 +80,27 @@ function updateNotes(updated) {
         if (err) throw err
     })
 }
+
+function getNextId(allNotes) {
+    var ids = getAllIds(allNotes)
+    if (ids.length === 0) {
+        return 1
+    }
+    else {
+        var max = Math.max(...ids)
+        return max + 1
+    }
+}
+
+function getAllIds(allNotes) {
+    var AllIdsArr = [];
+    for (var i=0; i<allNotes.length; i++) {
+        AllIdsArr.push(allNotes[i].id)
+    }
+
+    return AllIdsArr
+}
+
 
 
 // ===========================================================

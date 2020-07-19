@@ -67,3 +67,26 @@ app.get("/notes", function(req, res) {
 // var requestedID = req.params.id;
 // findNotebyId(requestedID); 
 
+
+//=============================================================
+
+// function getNextId(allNotes) {
+//     var ids = getAllIds(allNotes)
+//     if (ids.length === 0) {
+//         return 1
+//     }
+//     else {
+//         var max = Math.max(...ids)
+//         return max + 1
+//     }
+// }
+
+// function getAllIds(allNotes) {
+//     var AllIdsArr = [];
+//     for (var i=0; i<allNotes.length; i++) {
+//         AllIdsArr.push(allNotes[i].id)
+//     }
+
+//     return AllIdsArr
+// }
+
