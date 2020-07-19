@@ -62,7 +62,6 @@ app.post("/api/notes", function(req, res) {
 
 // ===========================================================
 
-
 function addNote(newNote) {
     var newNote = new Note (req.body.title, req.body.text);
     allNotes.push(newNote.stringify)
