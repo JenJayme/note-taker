@@ -1,4 +1,4 @@
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 var note = {
     title: 'One More Dummy Note',
@@ -7,9 +7,9 @@ var note = {
 
 function apiRequest () {
     $.ajax({
-      url: "/api/notes",
-      data: note,
-      method: "GET"
+        url: "/api/notes",
+        data: note,
+        method: "GET"
     }).then(function (response) {
         var noteListItems = response.data;
         if (!noteListItems) {
@@ -22,6 +22,11 @@ function apiRequest () {
     })
 }
 
-apiRequest(note);
-
 console.log("Running test on "+ note.title);
+
+
+$(document).ready(function(){
+    
+    apiRequest(note);
+  
+  });
