@@ -1,5 +1,3 @@
-
-
 <style>
 
 hr {
@@ -30,13 +28,13 @@ img[src*="#li-logo"] {
 };
  </style>
 
-# Jen's Handy Note Taker
+# Jen's Pocket Note Taker
 ![Travis Status](https://img.shields.io/travis/:jenjayme/:readme-generator)
 ![License](https://img.shields.io/github/license/jenjayme/readme-generator)
 ![Inquirer](https://img.shields.io/npm/v/inquirer)
 <hr>
 
-For users that need to keep track of a lot of information, it's easy to forget or be unable to recall something important. Being able to take persistent notes allows users to have written information available when needed.  This app provides a user-friendly tool for busy people to take and keep quick notes on essential day to day information.
+This versatile app provides a user-friendly tool for busy people to take, save and access quick notes on essential day to day information.  Built to have the ease of a scratch pad yet benefits of a digital file, this app is useful for capturing meeting notes, to do lists, book recommendations, phone numbers, any bit of information you want to save in a quickly accessible place.  
 
 <hr>
 
@@ -49,28 +47,28 @@ For users that need to keep track of a lot of information, it's easy to forget o
 
 ### Download the app from Git Hub here:
 * [Repo URL](https://github.com/jenjayme/note-taker/)
-* [Git Repo on Heroku](https://git.heroku.com/jens-note-taker.git#demo)
 
 ### To run: 
-* To be added
+* From the command line, type "node server.js"
 
-### You can view a demo here: 
+### You can view an interactive demo here: 
 * [Deployed URL](https://git.heroku.com/jens-note-taker.git#demo)
 
 <hr>
 
 ## [Visuals](#visuals)
 
-![Screenshot](images/screenshot.png#visuals)
-
-![Example Gif](images/example.gif#visuals)
+![Example Gif](public/assets/images/example.gif#visuals)
 
 <hr>
 
 ## [Built With](#built)
-![HTML5, CSS & Javascript](images/ic-html-css-js.png#icons)
-![VS Code](images/ic-vscode.png#icons)
-![Markdown](images/ic-md.png#icons)
+![HTML5, CSS & Javascript](public/assets/images/ic-html-css-js.png#icons)
+![Bootstrap](public/assets/images/ic-bootstrap.png#icons)
+![VS Code](public/assets/images/ic-vscode.png#icons)
+![Node.js](public/assets/images/ic-node.png#icons)
+![Express.js](public/assets/images/ic-express.png#icons)
+
 
 <hr>
 
@@ -81,7 +79,7 @@ web developer
 
 Novato, CA
 
-![LinkedIn](images/li-logo.png#li-logo)[/JenJayme](https://www.linkedin.com/in/jenjayme)
+![LinkedIn](public/assets/images/li-logo.png#li-logo)[/JenJayme](https://www.linkedin.com/in/jenjayme)
 
 ## Questions
 For questions or to discuss collaborations on this or other projects, contact me at:jeniferjayme@gmail.com(#contact)
