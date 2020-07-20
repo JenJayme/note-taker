@@ -2,6 +2,7 @@
 const fs = require('fs');
 const express = require("express");
 const app = express();
+const noteClass = require('noteclass.js')
 
 // More easily interact with the body of requests
 var bodyParser = require("body-parser")
@@ -21,7 +22,10 @@ app.use(express.static(__dirname + "/public"));
 
 // ===========================================================
 
+var newNote;
 var allNotes = [];
+var lastId = allNotes.length;
+console.log(lastId);
 
 // ===========================================================
 
@@ -31,79 +35,83 @@ var allNotes = [];
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/index.html"));
-});
+})
 
 app.get("/notes", function(req, res) {
-    debugger;
     res.sendFile(path.join(__dirname, "/public/notes.html"))
     // return res.json(gatherNotes())
-});
-
-
-// Gets all the notes
-app.get("/api/notes", function(req, res) {
-    let notes = allNotes || [];
-
-    res.json(notes);
-});
+   }) 
 
 // POST `/api/notes` - Should recieve a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
 app.post("/api/notes", function(req, res) {
-    var newNote = req.body;
-
-    newNote.id = assignNoteID();
-    addNote(newNote);
-    updateNotes(allNotes);
-    res.json(newNote);
-    console.log('New note appended: ' + JSON.stringify(newNote));
-    return newNote;
+    newNote = req.body
+    // assignNoteID(newNote);
+    fs.appendFile('/db/db.json', newNote, function (err) {
+        if (err) throw err;
+        console.log('Encountered an error trying to append file.');
+        res.json(newNote);
+        console.log('New note appended: ' + newNote);
+        return newNote;
+    });
 });
 
-// Delete a note 
-app.delete("/api/notes/:id", function(req, res) {
-    let noteId = req.params.id;
-
-    res.json(deleteNote(noteId));
-});
 // ===========================================================
 
-// Return the next Note ID for assignment
-function assignNoteID(newNote) {
-    return (allNotes ? allNotes.length + 1 : 1);
+
+
+
+// ===========================================================
+
+function addNote(newNote) {
+    var newNote = new Note (req.body.title, req.body.text);
+    allNotes.push(newNote.stringify)
+    return newNote; 
 }
 
-// Retrieves all the notes in db.json and store in allNotes array
 function gatherNotes() {
     var rawNotes = fs.readFileSync(path.join(__dirname, "/db/db.json"))
     return JSON.parse(rawNotes)
 }
 
-// Add a new note to the allNotes array
-function addNote(newNote) {
+//originally
+app.post("/api/notes/new", function(req, res) {
+    var newNote;
+    newNote.note = req.body;
+    newNote.id = noteID+1;
+    noteID++;
     allNotes.push(newNote);
-    updateNotes(allNotes);
+    res.json(newNote);
+    console.log(newNote);
+    return newNote;
+});
+
+function updateNotes(updated) {
+    fs.writeFile(path.join(__dirname, "db", "db.json"), JSON.stringify(updated), err => {
+        if (err) throw err
+    })
 }
 
-function updateNotes(notes) {
-    fs.writeFile(path.join(__dirname, "db", "db.json"), JSON.stringify(notes), err => {
-        if (err) throw err;
-    });
+function getNextId(allNotes) {
+    var ids = getAllIds(allNotes)
+    if (ids.length === 0) {
+        return 1
+    }
+    else {
+        var max = Math.max(...ids)
+        return max + 1
+    }
 }
 
-function deleteNote(id) {
-    const noteToDelete = allNotes.find(note => note.id === id);
-
-    if (!noteToDelete) {
-        return;
+function getAllIds(allNotes) {
+    var AllIdsArr = [];
+    for (var i=0; i<allNotes.length; i++) {
+        AllIdsArr.push(allNotes[i].id)
     }
 
-    // Remove the note from the notes array
-    allNotes.splice(allNotes.indexOf(noteToDelete), 1);
-    // Update the db.json file
-    updateNotes(allNotes);
-
-    return noteToDelete;
+    return AllIdsArr
 }
+
+
 
 // ===========================================================
 
@@ -112,7 +120,5 @@ function deleteNote(id) {
 // Listener
 // ===========================================================
 app.listen(PORT, function() {
-    // Load all the notes from db.json
-    allNotes = gatherNotes();
-    console.log("App listening on PORT " + PORT);
+console.log("App listening on PORT " + PORT);
 });
