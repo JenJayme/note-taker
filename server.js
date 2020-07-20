@@ -62,7 +62,6 @@ app.post("/api/notes", function(req, res) {
 // Delete a note 
 app.delete("/api/notes/:id", function(req, res) {
     let noteId = req.params.id;
-
     res.json(deleteNote(noteId));
 });
 // ===========================================================
@@ -74,7 +73,7 @@ function assignNoteID(newNote) {
 
 // Retrieves all the notes in db.json and store in allNotes array
 function gatherNotes() {
-    var rawNotes = fs.readFileSync(path.join(__dirname, "/db/db.json"))
+    var rawNotes = fs.readFileSync(path.join(__dirname, "db", "db.json"))
     return JSON.parse(rawNotes)
 }
 
@@ -102,12 +101,9 @@ function deleteNote(id) {
     // Update the db.json file
     updateNotes(allNotes);
 
+    console.log('Note to delete:' + noteToDelete);
     return noteToDelete;
 }
-
-// ===========================================================
-
-
 
 // Listener
 // ===========================================================
