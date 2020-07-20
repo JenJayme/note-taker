@@ -51,7 +51,7 @@ app.get("/api/notes", function(req, res) {
 app.post("/api/notes", function(req, res) {
     var newNote = req.body;
 
-    newNote.id = assignNoteID();
+    newNote.id = Date.now();
     addNote(newNote);
     updateNotes(allNotes);
     res.json(newNote);
@@ -67,9 +67,10 @@ app.delete("/api/notes/:id", function(req, res) {
 // ===========================================================
 
 // Return the next Note ID for assignment
-function assignNoteID(newNote) {
-    return (allNotes ? allNotes.length + 1 : 1);
-}
+// function assignNoteID(newNote) {
+    // return (allNotes ? allNotes.length + 1 : 1);
+    // return Date.now()
+// }
 
 // Retrieves all the notes in db.json and store in allNotes array
 function gatherNotes() {

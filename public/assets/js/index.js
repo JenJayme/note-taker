@@ -7,6 +7,7 @@ var $noteList = $(".list-container .list-group");
 
 // activeNote is used to keep track of the note in the textarea
 var activeNote = {};
+var note;
 
 // A function for getting all notes from the db
 var getNotes = function() {
@@ -65,15 +66,16 @@ var handleNoteSave = function() {
 
 // Delete the clicked note
 var handleNoteDelete = function(event) {
+debugger;
   // prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
 
-  var note = $(this)
+  note = $(this)
     .parent(".list-group-item")
     .data();
 
+//On the following line, note.id is throwing an error as 'undefined' - not sure how to fix this. Tried declaring note as a global variable but this didn't work.  Will go over in next tutoring session. 
   if (activeNote.id === note.id) {
-    console.log('Delete button clicked')
     activeNote = {};
   }
 
